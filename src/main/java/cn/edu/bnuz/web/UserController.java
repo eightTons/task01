@@ -12,13 +12,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+//@RequestMapping("/task01")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/fuck", method = RequestMethod.GET)
     @ResponseBody
-    private Map<String, Object> userLogin(@RequestParam(value = "name") String userName, @RequestParam(value = "password") String password) {
+    private Map<String, Object> user(@RequestParam(value = "name") String userName, @RequestParam(value = "password") String password) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         boolean isLogin = userService.queryUserByName(userName, password);
         if (isLogin) {
@@ -29,5 +30,10 @@ public class UserController {
             modelMap.put("errMsg", "密码错误");
             return modelMap;
         }
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    private String userLogin() {
+        return "login";
     }
 }
