@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.bnuz.dao.LoginDateDao">
+    <insert id="addLoginDate" useGeneratedKeys="true">
+        insert into
+        tb_login_date(create_time, user_id)
+        values
+        (#{loginDate}, #{userId})
+    </insert>
+    <select id="listLoginDate" resultType="cn.edu.bnuz.entity.LoginDate">
+        select
+        login_date_id,create_time,user_id
+        from
+        tb_login_date
+    </select>
+    <select id="listLoginDateAccount" resultType="int">
+        select
+        count(1)
+        from
+        tb_login_date
+    </select>
+</mapper>

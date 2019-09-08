@@ -3,13 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bnuz.dao.UserDao">
-    <select id="queryUser" resultType="cn.edu.bnuz.entity.User">
-        select user_id,user_name,password
-        from tb_user
+    <select id="queryUserLoginList" resultType="java.util.Date">
+        select
+        l.create_time,
+        l.user_id
+        from
+        tb_user u,
+        tb_login_date l
+        where
+        u.user_id = l.user_id
+        and
+        u.user_id=#{userId}
+        limit #{rowIndex},#{pageSize}
     </select>
     <select id="queryUserByName" resultType="string">
-        select password
-        from tb_user
+        select
+        password
+        from
+        tb_user
+        where
+        user_name=#{userName}
+    </select>
+    <update id="updatePassword" parameterType="string">
+        update
+        tb_user
+        set
+        password=#{password}
+        where
+        user_name=#{userName}
+    </update>
+    <select id="queryUserId" parameterType="long" resultType="java.lang.Long">
+        select
+        user_id
+        from
+        tb_user
         where user_name=#{userName}
     </select>
 </mapper>
