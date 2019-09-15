@@ -37,6 +37,7 @@ public class UserController {
             password = SHAUtils.SHA1(password);
             boolean isLogin = userService.queryUserByName(userName, password);
             if(isLogin){
+                request.getSession().setAttribute("userName", userName);
                 modelMap.put("success", true);
                 userService.addLoginDate(new Date(), 1L);
             }else{
@@ -112,10 +113,11 @@ public class UserController {
 
     @RequestMapping(value = "/listuserlogininfo", method = RequestMethod.GET)
     @ResponseBody
-    private  Map<String, Object> getUserLoginList(HttpServletRequest request) {
+    private  Map<String, Object> getUserLoginList(@RequestParam("page") Integer pageNum, @RequestParam("limit") Integer pageSize) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<UserLoginList> userLoginLists = userLoginListDao.queryUserLoginList("学生甲");
-        modelMap.put("code", 0);
+        modelMap.put("code", 200);
+        modelMap.put("count", userLoginLists.size());
         modelMap.put("data", userLoginLists);
         return modelMap;
     }

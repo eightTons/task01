@@ -97,8 +97,8 @@
                 <div class="ml-auto">
                     <header class="mb-4"><h1 class="tm-text-shadow">正在研发中...</h1></header>
                     <!--<p class="mb-5 tm-font-big">Aenean fermentum vestibulum ipsum, ut pretium erat sodales sodales.-->
-                        <!--Pellentesque quis orci vitae dui commodo sodales et ut quam. Etiam vitae egestas purus, ut-->
-                        <!--malesuada enim.</p>-->
+                    <!--Pellentesque quis orci vitae dui commodo sodales et ut quam. Etiam vitae egestas purus, ut-->
+                    <!--malesuada enim.</p>-->
                     <a href="#" class="btn tm-btn tm-font-big" data-nav-link="#tmNavLink2">Continue...</a>
                     <!-- data-nav-link holds the ID of nav item, which means this link should behave the same as that nav item  -->
                 </div>
@@ -107,7 +107,7 @@
             <!-- section 2 -->
             <section id="tm-section-2" class="tm-section tm-section-carousel">
                 <div id="select">
-                    <table id="demo" lay-filter="test"></table>
+                    <table id="demo" lay-filter="table_anomaly"></table>
                     <!--<table class="table table-striped table-bordered table-hover" id="userTable" style="text-align: center">-->
                     <!--<thead>-->
                     <!--<tr>-->
@@ -151,19 +151,19 @@
                         　　　　　　　　　
                         <div class="query-div" id="toolbar">
                             <header class="mb-4"><h1 class="tm-text-shadow">正在研发中...</h1></header>
-                        <!--<form class="form-inline" role="form" id="query_form">-->
-                        <!--<div class="form-group query-form-group">-->
-                        <!--<label for="status">状态</label>-->
-                        <!--<select class="form-control" id="with_appr_status">-->
-                        <!--<option value="">全部</option>-->
-                        <!--<option value="S1">待处理</option>-->
-                        <!--<option value="S2">已处理</option>-->
-                        <!--</select>-->
-                        <!--</div>-->
-                        <!--<div class="form-group query-form-group">-->
-                        <!--<button type="button" class="btn btn-default" id="with_query">查询</button>-->
-                        <!--</div>-->
-                        <!--</form>-->
+                            <!--<form class="form-inline" role="form" id="query_form">-->
+                            <!--<div class="form-group query-form-group">-->
+                            <!--<label for="status">状态</label>-->
+                            <!--<select class="form-control" id="with_appr_status">-->
+                            <!--<option value="">全部</option>-->
+                            <!--<option value="S1">待处理</option>-->
+                            <!--<option value="S2">已处理</option>-->
+                            <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="form-group query-form-group">-->
+                            <!--<button type="button" class="btn btn-default" id="with_query">查询</button>-->
+                            <!--</div>-->
+                            <!--</form>-->
                         </div>
 
 
@@ -454,7 +454,6 @@
             elem: '#demo'
             , height: 312
             , url: '/listuserlogininfo' //数据接口
-            , page: true //开启分页
             , cols: [[ //表头
                 {field: 'userId', title: '用户ID', width: 100}
                 , {field: 'userName', title: '用户名', width: 80}
@@ -466,8 +465,28 @@
                     templet: '<div>{{ layui.util.toDateString(d.createDate, "yyyy-MM-dd HH:mm:ss") }}</div>'
                 }
             ]]
-            , limit: 6
+            , request: {
+                pageName: 'page',
+                limitName: 'row'
+            }
+            , response: {
+                statusName: 'code',
+                statusCode: '200',
+                msgName: 'msg',
+                count: 'count',
+                data: 'data'
+            }
+            , page: true
+            , limits: [6, 10, 14]
+            , limit: 5
         });
+        //表格点击事件 监测行 点击行tr  高亮显示
+        table.on('row(table_anomaly)', function(obj) {
+            //改变自己颜色
+            obj.tr.css("background-color","#32cdff");
+            //改变兄弟元素颜色
+            obj.tr.siblings().css("background-color","#ffffff");
+        })
 
     });
 
